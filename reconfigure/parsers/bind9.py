@@ -8,7 +8,13 @@ class BIND9Parser (NginxParser):
     """
 
     tokens = [
-        (r"(acl|key|masters|server|trusted-keys|managed-keys|controls|logging|lwres|options|view|zone|channel|category|listen-on|search|avoid-v4-udp-ports|avoid-v6-udp-ports|blackhole|listen-on|listen-on-v6|allow-recursion|allow-recursion-on|sortlist|topology|rrset-order|dual-stack-servers|disable-algorithms|dns64|forwarders|rrset-order|update-policy|also-notify|allow-notify|rate-limit)\s+?([^\s{}]*\s*)*{", lambda s, t: ('section_start', t)),
+        (r"(masters)\s+?([^\s{}]*)\s+?(port|dscp)\s+?([^\s{}]*\s*)\s*(port|dscp)\s*?([^\s{}]*\s*)\s*{", lambda s, t: ('section_start', t)),
+        (r"(listen-on-v6|listen-on|masters)\s+?(port|dscp)\s+?([^\s{}]*\s*)\s*{", lambda s, t: ('section_start', t)),
+        (r"(view|zone)\s+?([^\s{}]*)?\s+?([^\s{}]*)\s*{", lambda s, t: ('section_start', t)),
+        (r"(acl|key|masters|server)\s+?([^\s{}]*\s*)\s*{", lambda s, t: ('section_start', t)),
+        (r"(controls|logging|options)\s+?([^\s{}]*\s*)*{", lambda s, t: ('section_start', t)),
+        (r"(allow-notify|allow-query-on|allow-query|allow-recursion-on|allow-recursion|allow-transfer|allow-update-forwarding|allow|also-notify|alt-transfer-source-v6|alt-transfer-source|disable-algorithms|dual-stack-servers|forwarders|managed-keys|match-clients|match-destinations|rrset-order|sortlist|update-policy)\s+?([^\s{}]*\s*)*{", lambda s, t: ('section_start', t)),
+        (r"(channel)\s+?([^\s{}]*\s*)\s*{", lambda s, t: ('section_start', t)),
         (r"\#.*?\n", lambda s, t: ('comment', t)),
         (r"//.*?\n", lambda s, t: ('comment', t)),
         (r"/\*.*?\*/", lambda s, t: ('comment', t)),
